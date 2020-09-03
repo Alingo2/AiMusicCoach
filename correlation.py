@@ -28,7 +28,7 @@ def period(a):
 #读取音频文件,将其按照采样率离散化，返回采样率和信号
 #sample_reate:采样率(每秒采样个数),　sigs:每个采样位移值。
 #================1.原始音频信号,时域信息=================================
-sameple_rate,sigs = wf.read('./test/B5.wav')
+sameple_rate,sigs = wf.read('./test/A3CE4.wav')
 print('采样率:{}'.format(sameple_rate))
 print('信号点数量:{}'.format(sigs.size))
 sigs = sigs/(2**15)
@@ -81,10 +81,15 @@ plt.grid(linestyle=':')
 plt.plot(times[:num],filter_sigs[:num],color='dodgerblue',label='Filter Signal')
 plt.legend()
 
-sigs0 = sigs
-sigs1 = filter_sigs
-# sigs0 = sigs[num//3:2*(num//3)]
-# sigs1 = filter_sigs[num//3:2*(num//3)]
+# sigs0 = sigs
+# sigs1 = filter_sigs
+s1 = np.array(sigs)
+mark1 = np.argmax(s1)
+sigs0 = sigs[mark1:mark1+10000]
+
+s2 = np.array(filter_sigs)
+mark2 = np.argmax(s2)
+sigs1 = sigs[mark2:mark2+10000]
 
 
 #重新生成音频文件
@@ -106,16 +111,14 @@ np.set_printoptions(threshold=np.inf)
 
 tic = timer()
 corre = librosa.core.autocorrelate(sigs0)
-corre1=corre[180:790]
-per = np.argmax(corre1)+180
+corre1=corre[120:1580]
+per = np.argmax(corre1)+120
 toc = timer()
 print("时间2：",toc - tic) # 输出的时间，秒为单位
 
 corre = librosa.core.autocorrelate(sigs1)
-corre1=corre[180:790]
-per2 = np.argmax(corre1)+180
+corre1=corre[120:1580]
+per2 = np.argmax(corre1)+120
 
 # print("频率:",frequence)
-print("频率1:",64000/per,"         频率2：",64000/per2)
-
-
+print("频率1:",128000/per,"         频率2：",128000/per2)

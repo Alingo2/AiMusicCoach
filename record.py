@@ -4,7 +4,7 @@ import threading
 import wave
  
 class Recorder():
-    def __init__(self, chunk=1024, channels=1, rate=64000):
+    def __init__(self, chunk=1024, channels=1, rate=128000):
         self.CHUNK = chunk
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = channels
@@ -60,4 +60,4 @@ if __name__ == "__main__":
             fina = time.time()
             t = fina - begin
             print('录音时间为%ds'%t)
-            rec.save("./test/#A5.wav")
+            rec.save("./test/C4C4C4G3E4E4E4C4.wav")
