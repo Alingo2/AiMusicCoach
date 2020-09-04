@@ -28,7 +28,7 @@ def period(a):
 #读取音频文件,将其按照采样率离散化，返回采样率和信号
 #sample_reate:采样率(每秒采样个数),　sigs:每个采样位移值。
 #================1.原始音频信号,时域信息=================================
-sameple_rate,sigs = wf.read('./test/A3CE4.wav')
+sameple_rate,sigs = wf.read('./test/BC_1.wav')
 print('采样率:{}'.format(sameple_rate))
 print('信号点数量:{}'.format(sigs.size))
 sigs = sigs/(2**15)
@@ -101,12 +101,6 @@ plt.show()
 
 np.set_printoptions(threshold=np.inf)
 
-# tic1 = timer()
-# frequence = 64000/period(sigs0)
-# toc1 = timer()
-# print("时间1：",toc1 - tic1) # 输出的时间，秒为单位
-# frequence2 = 64000/period(sigs1)
-# print("频率2:",frequence2)
 
 
 tic = timer()

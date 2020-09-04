@@ -8,13 +8,14 @@ import numpy as np
 # print(sum(zero_crossings))
 
 
-
-y, sr = librosa.load('./test/',sr=192000)
-
+sr0=30000
+y, sr = librosa.load('./test/guitar2.wav',sr=sr0)
+ratio = 512/sr0
+#print(sr)
 # onset_env = librosa.onset.onset_strength(y=y, sr=128000,hop_length=512,aggregate=np.median)
-onsets_frames = librosa.onset.onset_detect(y,sr=192000,units="frames")
-print(onsets_frames)
-
+onsets_frames = librosa.onset.onset_detect(y,sr=sr0,units="frames")
+#print(onsets_frames/max(onsets_frames))
+print(onsets_frames*ratio)
 D = librosa.stft(y)
 librosa.display.specshow(librosa.amplitude_to_db(D))
 plt.vlines(onsets_frames, 0, sr, color='r', linestyle='--')

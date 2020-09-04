@@ -4,7 +4,7 @@ import numpy as np
 import librosa
 import os
 
-filename= r"G:\guit\AiMusicCoach\test\changeC4C4C4G3E4E4E4C4.wav"
+filename= "./test/BC_1.wav"
 f = wave.open(filename,'rb')
 params = f.getparams()
 nchannels, sampwidth, framerate, nframes = params[:4]

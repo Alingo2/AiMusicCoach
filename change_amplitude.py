@@ -4,7 +4,7 @@ import numpy as np
 import librosa
 import os
 
-filename = r"G:\guit\AiMusicCoach\test\C3G3C4G3E4G3C4G3快.wav" #添加路径
+filename = r"./test/guitar.wav" #添加路径
 f = wave.open(filename,'rb')
 params = f.getparams()
 nchannels, sampwidth, framerate, nframes = params[:4]
@@ -15,7 +15,7 @@ waveData = waveData*1.0/(max(abs(waveData)))#wave幅值归一化
 time = np.arange(0,nframes)*(1.0 / framerate)
 judge_time=[]
 L=len(waveData)
-N=10000
+N=28220
 k=L//N
 for i in range(1,k+1):
     sum=0
@@ -41,10 +41,9 @@ cut_time=[]
 for i in range(2,change_L-1):
     if judge_time[i]<=judge_time[i-1] and judge_time[i]<=judge_time[i+1]:
         cut_time.append(i)
-temp=cut_time[1]
-k=1
+
 cut_time_final=[]
-sr=128000
+sr=1411000
 for i in range(0,len(cut_time)-1):
     if  cut_time[i] != cut_time[i+1]-1:
         cut_time_final.append(cut_time[i]*N/sr)
