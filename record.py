@@ -60,4 +60,4 @@ if __name__ == "__main__":
             fina = time.time()
             t = fina - begin
             print('录音时间为%ds'%t)
-            rec.save("./test/C4C4C4G3E4E4E4C4.wav")
+            rec.save("./test/1.wav")

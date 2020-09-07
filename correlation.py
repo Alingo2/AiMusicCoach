@@ -9,6 +9,8 @@ import os
 import librosa
 from timeit import default_timer as timer
 path = os.getcwd()
+
+# np.set_printoptions(threshold=np.inf)
 def period(a):
     per = 0
     length_voice=len(a)
@@ -28,24 +30,29 @@ def period(a):
 #读取音频文件,将其按照采样率离散化，返回采样率和信号
 #sample_reate:采样率(每秒采样个数),　sigs:每个采样位移值。
 #================1.原始音频信号,时域信息=================================
-sameple_rate,sigs = wf.read('./test/BC_1.wav')
+sameple_rate,sigs = wf.read('./test/cool1_7.wav')
+bolt = sameple_rate
 print('采样率:{}'.format(sameple_rate))
 print('信号点数量:{}'.format(sigs.size))
 sigs = sigs/(2**15)
+sigs = np.array(sigs)
+sigs = (sigs.T[0] + sigs.T[1])/2
+print("11111111111",sigs)
+
 times = np.arange(len(sigs))/sameple_rate
 plt.figure('Filter',facecolor='lightgray')
 plt.subplot(221)
 plt.title('Time Domain',fontsize=16)
 plt.ylabel('Signal',fontsize=12)
 plt.grid(linestyle=':')
-num = sigs.size-1
+num = (sigs.size-1)                                 #报错切成sigs.size-1
 plt.plot(times[:num],sigs[:num],color='dodgerblue',label='Noised Signal')
 plt.legend()
 
 #==================2.转换为频率域信号===================================
 #基于傅里叶变换，获取音频频域信息
 #绘制音频频域的: 频域/能量图像
-freqs = nf.fftfreq(sigs.size, 1/sameple_rate)
+freqs = nf.fftfreq(sigs.size, 1/sameple_rate)       #报错切成sigs.size-1
 print(freqs)
 complex_arry = nf.fft(sigs)
 pows = np.abs(complex_arry)
@@ -53,6 +60,7 @@ plt.subplot(222)
 plt.title('Frequence Domain',fontsize=16)
 plt.ylabel('power',fontsize=12)
 plt.grid(linestyle=':')
+print("22222",len(freqs),len(pows))
 plt.semilogy(freqs[freqs>0],pows[freqs>0],color='dodgerblue',label='Noised Freq')
 plt.legend()
 
@@ -83,13 +91,15 @@ plt.legend()
 
 # sigs0 = sigs
 # sigs1 = filter_sigs
-s1 = np.array(sigs)
-mark1 = np.argmax(s1)
-sigs0 = sigs[mark1:mark1+10000]
+# s1 = np.array(sigs)
+mark1 = (sigs.size)//3
+sigs0 = sigs[mark1:mark1+(bolt//80)*6]
+# sigs0 = sigs
+print("sigs0:~~~~~~~~~~~~~~",len(sigs0))
 
 s2 = np.array(filter_sigs)
-mark2 = np.argmax(s2)
-sigs1 = sigs[mark2:mark2+10000]
+mark2 = (sigs.size)//3
+sigs1 = sigs[mark2:mark2+(bolt//80)*6]
 
 
 #重新生成音频文件
@@ -99,20 +109,19 @@ filter_sigs = (filter_sigs*(2**15)).astype('i2')
 plt.tight_layout()
 plt.show()
 
-np.set_printoptions(threshold=np.inf)
-
-
 
 tic = timer()
 corre = librosa.core.autocorrelate(sigs0)
-corre1=corre[120:1580]
-per = np.argmax(corre1)+120
+print("bolt//1100:bolt//80",bolt//1100,bolt//80)
+print(len(corre))
+corre1=corre[bolt//1100:bolt//80]
+per = np.argmax(corre1)+bolt//1100
 toc = timer()
 print("时间2：",toc - tic) # 输出的时间，秒为单位
 
 corre = librosa.core.autocorrelate(sigs1)
-corre1=corre[120:1580]
-per2 = np.argmax(corre1)+120
+corre1=corre[bolt//1100:bolt//80]
+per2 = np.argmax(corre1)+bolt//1100
 
 # print("频率:",frequence)
-print("频率1:",128000/per,"         频率2：",128000/per2)
+print("频率1:",bolt/per,"         频率2：",bolt/per2)
