@@ -8,29 +8,27 @@ import scipy.io.wavfile as wf
 import os
 import librosa
 from timeit import default_timer as timer
-path = os.getcwd()
 
-# np.set_printoptions(threshold=np.inf)
-def period(a):
-    per = 0
-    length_voice=len(a)
-    R=[]
-    temp=0
-    for i in range (180,790): #i是自相关差
-        temp=0
-        for j in range(1,length_voice-i):
-            temp=temp+a[j]*a[j+i]
-        R.append(temp)
-    r = np.array(R)
-    print(r)
-    per = np.argmax(r)+180
-    return per
+# def period(a):
+#     per = 0
+#     length_voice=len(a)
+#     R=[]
+#     temp=0
+#     for i in range (180,790): #i是自相关差
+#         temp=0
+#         for j in range(1,length_voice-i):
+#             temp=temp+a[j]*a[j+i]
+#         R.append(temp)
+#     r = np.array(R)
+#     print(r)
+#     per = np.argmax(r)+180
+#     return per
 
 
 #读取音频文件,将其按照采样率离散化，返回采样率和信号
 #sample_reate:采样率(每秒采样个数),　sigs:每个采样位移值。
 #================1.原始音频信号,时域信息=================================
-sameple_rate,sigs = wf.read('./test/cool1_7.wav')
+sameple_rate,sigs = wf.read('./test/cool2_3.wav')
 bolt = sameple_rate
 print('采样率:{}'.format(sameple_rate))
 print('信号点数量:{}'.format(sigs.size))
@@ -53,21 +51,21 @@ plt.legend()
 #基于傅里叶变换，获取音频频域信息
 #绘制音频频域的: 频域/能量图像
 freqs = nf.fftfreq(sigs.size, 1/sameple_rate)       #报错切成sigs.size-1
-print(freqs)
+
 complex_arry = nf.fft(sigs)
 pows = np.abs(complex_arry)
 plt.subplot(222)
 plt.title('Frequence Domain',fontsize=16)
 plt.ylabel('power',fontsize=12)
 plt.grid(linestyle=':')
-print("22222",len(freqs),len(pows))
+print("22222",freqs[0]-freqs[1],freqs[1]-freqs[2],len(pows))
 plt.semilogy(freqs[freqs>0],pows[freqs>0],color='dodgerblue',label='Noised Freq')
 plt.legend()
 
 #==============第3步=================================================
 #将低能噪声去除后绘制音频频域的: 频率/能量图书
 fun_freq = freqs[pows.argmax()] #获取频率域中能量最高的
-#print(fun_freq)
+print("主频率：   ",abs(fun_freq))
 noised_idx_high = np.where(abs(freqs) >= 2000)[0] #获取所有噪声的下标
 ca = complex_arry[:]
 ca[noised_idx_high] = 0 #高通滤波
@@ -116,6 +114,7 @@ print("bolt//1100:bolt//80",bolt//1100,bolt//80)
 print(len(corre))
 corre1=corre[bolt//1100:bolt//80]
 per = np.argmax(corre1)+bolt//1100
+print("per:",per)
 toc = timer()
 print("时间2：",toc - tic) # 输出的时间，秒为单位
 

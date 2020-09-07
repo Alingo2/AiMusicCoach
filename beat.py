@@ -9,7 +9,7 @@ import numpy as np
 
 
 sr0=30000
-y, sr = librosa.load('./test/cool1.wav',sr=sr0)
+y, sr = librosa.load('./test/cool2.wav',sr=sr0)
 ratio = 512/sr0
 #print(sr)
 # onset_env = librosa.onset.onset_strength(y=y, sr=128000,hop_length=512,aggregate=np.median)
