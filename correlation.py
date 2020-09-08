@@ -33,6 +33,7 @@ bolt = sameple_rate
 print('采样率:{}'.format(sameple_rate))
 print('信号点数量:{}'.format(sigs.size))
 sigs = sigs/(2**15)
+sigs=sigs[:2*len(sigs)//3]
 sigs = np.array(sigs)
 sigs = (sigs.T[0] + sigs.T[1])/2
 print("11111111111",sigs)
@@ -58,7 +59,7 @@ plt.subplot(222)
 plt.title('Frequence Domain',fontsize=16)
 plt.ylabel('power',fontsize=12)
 plt.grid(linestyle=':')
-print("22222",freqs[0]-freqs[1],freqs[1]-freqs[2],len(pows))
+print("22222",freqs[-1])
 plt.semilogy(freqs[freqs>0],pows[freqs>0],color='dodgerblue',label='Noised Freq')
 plt.legend()
 
@@ -72,12 +73,19 @@ ca[noised_idx_high] = 0 #高通滤波
 noised_idx_low = np.where(abs(freqs) <= 0)[0]
 ca[noised_idx_low] = 0
 filter_pows = np.abs(complex_arry)
-
+db_to = np.log10(filter_pows)
+nor_max = db_to[np.argmax(db_to)]
+normalization = db_to/nor_max
+onset_peak = librosa.util.peak_pick(normalization[freqs>0],5, 5, 5, 5, 0.3, 70)
 plt.subplot(224)
 plt.ylabel('power',fontsize=12)
 plt.grid(linestyle=':')
-plt.semilogy(freqs[freqs>0],filter_pows[freqs>0],color='dodgerblue',label='Filter Freq')
+# plt.semilogy(freqs[freqs>0],filter_pows[freqs>0],color='dodgerblue',label='Filter Freq')
+# plt.vlines(onset_peak, 0, 1000, colors = "r", linestyles = "dashed")
+plt.plot(freqs[freqs>0],normalization[freqs>0],color='dodgerblue',label='Filter Signal')
 plt.legend()
+plt.vlines(onset_peak, 0, 1, colors = "r", linestyles = "dashed")
+print("x",len(freqs[freqs>0]),onset_peak)
 #================第4步==============================================
 filter_sigs = nf.ifft(ca)
 plt.subplot(223)

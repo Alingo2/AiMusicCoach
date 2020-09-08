@@ -13,30 +13,45 @@ def judge(time_domain_freq,frequency_domain_freq):
     if 1.05>=time_domain_freq/frequency_domain_freq>=1/1.05:
         return True
     return False
+def freq_cul(filepath,i):
+    sameple_rate, sigs = wf.read(filepath + str(i) + ".wav")
+    sigs = sigs / (2 ** 15)
+    sigs = np.array(sigs)
+    sigs = (sigs.T[0] + sigs.T[1]) / 2
+    times = np.arange(len(sigs)) / sameple_rate
 
+    bolt = sameple_rate
+    mark1 = (sigs.size) // 3 * 2
+    sigs0 = sigs[:mark1]
+    corre = librosa.core.autocorrelate(sigs0)
+    corre1 = corre[bolt // 1100:bolt // 80]
+    per = np.argmax(corre1) + bolt // 1100
+    freqs = nf.fftfreq(sigs0.size, 1 / sameple_rate)
+    complex_arry = nf.fft(sigs0)
+    pows = np.abs(complex_arry)
+    max_pows_num=pows.argmax()
+    fun_freq = abs(freqs[max_pows_num])
+    max_pows=int(pows[max_pows_num])# 获取频率域中能量最高的
+    Tdomain_freq=bolt / per
+    if not judge(Tdomain_freq,fun_freq):
+        print(i)
+        distant=freqs[1]-freqs[0]
+        tdo_num=int(Tdomain_freq//distant)
+        #print(tdo_num)
+        # print(pows[tdo_num-1:tdo_num+1])
+        Tfreq_pow=max(pows[tdo_num-1],pows[tdo_num],pows[tdo_num+1])
+        print("max_pow",max_pows)
+        print("freqpow",Tfreq_pow)
+        distinguishment = Tfreq_pow/max_pows
+        print("比例：",distinguishment)
+    return [Tdomain_freq,fun_freq]
 def cut_beat_pitch_detect(filepath,total_num):
     pitch_array=[]
     pitch_array1=[]
     for i in range(1,total_num+1):
-        sameple_rate, sigs = wf.read(filepath+str(i)+".wav")
-        sigs = sigs / (2 ** 15)
-        sigs = np.array(sigs)
-        sigs = (sigs.T[0] + sigs.T[1]) / 2
-        times = np.arange(len(sigs)) / sameple_rate
-
-        bolt = sameple_rate
-        mark1 = (sigs.size) // 3 * 2
-        sigs0 = sigs[:mark1]
-        corre = librosa.core.autocorrelate(sigs0)
-        corre1 = corre[bolt // 1100:bolt // 80]
-        per = np.argmax(corre1) + bolt // 1100
-        print(per)
-        pitch_array.append(bolt/per)
-        freqs = nf.fftfreq(sigs0.size, 1 / sameple_rate)
-        complex_arry = nf.fft(sigs0)
-        pows = np.abs(complex_arry)
-        fun_freq = freqs[pows.argmax()]  # 获取频率域中能量最高的
-        pitch_array1.append(fun_freq)
+        data=freq_cul(filepath,i)
+        pitch_array.append(data[0])
+        pitch_array1.append(data[1])
 
     return pitch_array,pitch_array1
 def beat_cul(filepath):
