@@ -28,7 +28,7 @@ from timeit import default_timer as timer
 #读取音频文件,将其按照采样率离散化，返回采样率和信号
 #sample_reate:采样率(每秒采样个数),　sigs:每个采样位移值。
 #================1.原始音频信号,时域信息=================================
-sameple_rate,sigs = wf.read('./test/cool4_11.wav')
+sameple_rate,sigs = wf.read('./test/cool2_3.wav')
 bolt = sameple_rate
 print('采样率:{}'.format(sameple_rate))
 print('信号点数量:{}'.format(sigs.size))
@@ -69,18 +69,19 @@ fun_freq = freqs[pows.argmax()] #获取频率域中能量最高的
 print("主频率：   ",abs(fun_freq))
 noised_idx_high = np.where(abs(freqs) >= 2000)[0] #获取所有噪声的下标
 ca = complex_arry[:]
-ca[noised_idx_high] = 1 #高通滤波      之后取对数为0
+ca[noised_idx_high] = 0 #高通滤波
 noised_idx_low = np.where(abs(freqs) <= 0)[0]
-ca[noised_idx_low] = 1
-# filter_pows = np.abs(complex_arry)
-filter_pows = np.abs(ca)
+ca[noised_idx_low] = 0
+filter_pows = np.abs(complex_arry)
 db_to = np.log10(filter_pows)
-# print("db_to:",db_to)
 nor_max = db_to[np.argmax(db_to)]
 normalization = db_to/nor_max
-#print(len(normalization),len(filter_pows))
-onset_peak = librosa.util.peak_pick(normalization[freqs>0],3, 3, 3, 3, 0.12, 5)
-#print(freqs[onset_peak+1])
+normalization=normalization[np.where(abs(freqs)<2000)[0]]
+freqs=freqs[np.where(abs(freqs)<2000)[0]]
+normalization=normalization[np.where(freqs>=0)[0]]
+freqs=freqs[np.where(freqs>=0)[0]]
+onset_peak = librosa.util.peak_pick(normalization,3, 3, 3, 3, 0.13, 5)
+print(freqs)
 plt.subplot(224)
 plt.ylabel('power',fontsize=12)
 plt.grid(linestyle=':')
@@ -88,7 +89,8 @@ plt.grid(linestyle=':')
 # plt.vlines(onset_peak, 0, 1000, colors = "r", linestyles = "dashed")
 plt.plot(freqs[freqs>0],normalization[freqs>0],color='dodgerblue',label='Filter Signal')
 plt.legend()
-plt.vlines(freqs[onset_peak+1], 0, 1.5, colors = "r", linestyles = "dashed")
+plt.vlines(freqs[onset_peak], 0, 1, colors = "r", linestyles = "dashed")
+print("x",len(freqs[freqs>0]),onset_peak)
 #================第4步==============================================
 filter_sigs = nf.ifft(ca)
 plt.subplot(223)
@@ -104,7 +106,7 @@ plt.legend()
 mark1 = (sigs.size)//3
 sigs0 = sigs[mark1:mark1+(bolt//80)*6]
 # sigs0 = sigs
-print("sigs0:~~~~~~~~~~~~~~",len(sigs0))
+#print("sigs0:~~~~~~~~~~~~~~",len(sigs0))
 
 s2 = np.array(filter_sigs)
 mark2 = (sigs.size)//3
@@ -121,13 +123,13 @@ plt.show()
 
 tic = timer()
 corre = librosa.core.autocorrelate(sigs0)
-print("bolt//1100:bolt//80",bolt//1100,bolt//80)
-print(len(corre))
+#print("bolt//1100:bolt//80",bolt//1100,bolt//80)
+#print(len(corre))
 corre1=corre[bolt//1100:bolt//80]
 per = np.argmax(corre1)+bolt//1100
-print("per:",per)
+#print("per:",per)
 toc = timer()
-print("时间2：",toc - tic) # 输出的时间，秒为单位
+#print("时间2：",toc - tic) # 输出的时间，秒为单位
 
 corre = librosa.core.autocorrelate(sigs1)
 corre1=corre[bolt//1100:bolt//80]
