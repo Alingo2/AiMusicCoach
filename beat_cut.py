@@ -8,8 +8,8 @@ import math
 import numpy.fft as nf
 import scipy.io.wavfile as wf
 import os
-filepath0 = "./test/cool5.wav"
-filename="./test/cool5_"
+filepath0 = "./test/B3E4B3E4.wav"
+filename="./test/B3E4B3E4_"
 
 def fre_to_note(fre):
     index = round(math.log(fre / 82.4,2**(1/12)))
@@ -23,7 +23,8 @@ def freq_cul(filepath,i):
     result = 0
     sameple_rate, sigs = wf.read(filepath + str(i) + ".wav")
     sigs = sigs / (2 ** 15)
-    sigs = sigs[:2 * len(sigs) // 3]
+    sigs = sigs[:2 * len(sigs) // 3]              #使泛音衰减
+    # sigs = sigs[2 * len(sigs) // 3:] 
     sigs = np.array(sigs)
     sigs = (sigs.T[0] + sigs.T[1]) / 2
     times = np.arange(len(sigs)) / sameple_rate
@@ -60,7 +61,6 @@ def freq_cul(filepath,i):
             result =fun_freq
     else:
         result=(Tdomain_freq+fun_freq)/2
-        #print("比例：",distinguishment)
     return result
 def cut_beat_pitch_detect(filepath,total_num):
     pitch_array=[]
@@ -87,7 +87,7 @@ music_beat=[round(i,2) for i in music_beat]
 print(music_beat)
 pre_time=0
 for i in range(len(beat_time)-1):
-    (input_music[beat_time[i]*1000:beat_time[i+1]*1000]).export(filename+str(i+1)+".wav", format="wav")# 截取音频的前3秒(单位为毫秒)
+    (input_music[beat_time[i]*1000:beat_time[i+1]*1000]).export(filename+str(i+1)+".wav", format="wav")
     # print(beat_time[i]*1000,beat_time[i+1]*1000)
     # output_music.export("./test/BC_"+str(i+1)+".wav", format="wav") # 保存音频，前面为保存的路径，后面为保存的格式
 output_music0 = input_music[beat_time[-1]*1000:beat_time[-1]*1000+500] # 截取音频的前3秒(单位为毫秒)
