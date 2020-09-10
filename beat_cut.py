@@ -8,8 +8,8 @@ import math
 import numpy.fft as nf
 import scipy.io.wavfile as wf
 import os
-filepath0 = "./test/cool4.wav"
-filename="./test/cool4_"
+filepath0 = "./test/cool5.wav"
+filename="./test/cool5_"
 
 def fre_to_note(fre):
     index = round(math.log(fre / 82.4,2**(1/12)))
