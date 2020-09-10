@@ -78,6 +78,13 @@ def beat_cul(filepath):
     return onsets_frames*ratio
 input_music = AudioSegment.from_wav(filepath0)
 beat_time = beat_cul(filepath0)
+b0=beat_time[:-1]
+b1=beat_time[1:]
+beat_duration=np.array(b1)-np.array(b0)
+beat=80
+music_beat=beat_duration*beat/60
+music_beat=[round(i,2) for i in music_beat]
+print(music_beat)
 pre_time=0
 for i in range(len(beat_time)-1):
     (input_music[beat_time[i]*1000:beat_time[i+1]*1000]).export(filename+str(i+1)+".wav", format="wav")# 截取音频的前3秒(单位为毫秒)
@@ -90,6 +97,4 @@ print(result)
 notes = "".join(fre_to_note(i) for i in result)
 print(notes)
 # print(result[1])
-# print(judge(1.05,1))
-
-
+# print(judge(1.05,1))9
