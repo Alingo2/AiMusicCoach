@@ -5,9 +5,11 @@ import os
 import librosa
 from timeit import default_timer as timer
 import json
-obj_r=open("./examples3.json")
+
+obj_r=open("./test/json/examples3.json")
 data=json.load(obj_r)
 guitar_data=[]
+
 for file_data in data.items():
     if file_data[1]['instrument_family']==3 and file_data[1]["instrument_source_str"]=="acoustic":
         if 40<=file_data[1]['pitch']<=84:
@@ -74,6 +76,9 @@ def get_peak_data(filepath):
     #print(result)
         return result
     else:
+        print(filepath)
+        global delete_num
+        delete_num += 1
         return
 
 result=[]
@@ -81,8 +86,10 @@ result1=[[],[]]
 result2=[]
 standard_pitch=[]
 name=[]
+delete_num = 0
+
 for info in guitar_data:
-    filepath='./test/dataset/'+info[0]+'.wav'
+    filepath='./test/dataset/out/'+info[0]+'_.wav'
     peakdata=get_peak_data(filepath)
     if peakdata != None:
         # print('0', peakdata)
@@ -95,9 +102,10 @@ for info in guitar_data:
         #name.append(info[0])
 #result1 = np.array(result1)
 #result2 = np.array(result2)
-print(result2)
-print(standard_pitch)
+# print(result2)
+# print(standard_pitch)
 print(len(result2))
+print("舍弃量:",delete_num)
 with open("dataset3_train.txt","w") as f:
         f.write(str(result2))
 with open("dataset3_result.txt","w") as f:
