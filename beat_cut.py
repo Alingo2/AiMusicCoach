@@ -8,8 +8,7 @@ import math
 import numpy.fft as nf
 import scipy.io.wavfile as wf
 import os
-filepath0 = "./test/B3E4B3E4.wav"
-filename="./test/B3E4B3E4_"
+
 
 def fre_to_note(fre):
     index = round(math.log(fre / 82.4,2**(1/12)))
@@ -76,25 +75,34 @@ def beat_cul(filepath):
     ratio = 512/sr0
     onsets_frames = librosa.onset.onset_detect(y,sr=sr0,units="frames")
     return onsets_frames*ratio
-input_music = AudioSegment.from_wav(filepath0)
-beat_time = beat_cul(filepath0)
-b0=beat_time[:-1]
-b1=beat_time[1:]
-beat_duration=np.array(b1)-np.array(b0)
-beat=80
-music_beat=beat_duration*beat/60
-music_beat=[round(i,2) for i in music_beat]
-print(music_beat)
-pre_time=0
-for i in range(len(beat_time)-1):
-    (input_music[beat_time[i]*1000:beat_time[i+1]*1000]).export(filename+str(i+1)+".wav", format="wav")
-    # print(beat_time[i]*1000,beat_time[i+1]*1000)
-    # output_music.export("./test/BC_"+str(i+1)+".wav", format="wav") # 保存音频，前面为保存的路径，后面为保存的格式
-output_music0 = input_music[beat_time[-1]*1000:beat_time[-1]*1000+500] # 截取音频的前3秒(单位为毫秒)
-output_music0.export(filename+str(len(beat_time))+".wav", format="wav") # 保存音频，前面为保存的路径，后面为保存的格式
-result=cut_beat_pitch_detect(filename,len(beat_time))
-print(result)
-notes = "".join(fre_to_note(i) for i in result)
-print(notes)
+
+
+# filepath0 = "./test/happy_birthday.wav"
+# filename="./test/happy_birthday_"
+
+def music_to_note(path,f):
+    filepath0 = path + "\\" + f
+    filename = path + "_"+
+    input_music = AudioSegment.from_wav(filepath0)
+    beat_time = beat_cul(filepath0)
+    b0=beat_time[:-1]
+    b1=beat_time[1:]
+    beat_duration=np.array(b1)-np.array(b0)
+    beat=80
+    music_beat=beat_duration*beat/60
+    music_beat=[round(i,2) for i in music_beat]
+    print(music_beat)
+    pre_time=0
+    for i in range(len(beat_time)-1):
+        (input_music[beat_time[i]*1000:beat_time[i+1]*1000]).export(filename+str(i+1)+".wav", format="wav")
+        # print(beat_time[i]*1000,beat_time[i+1]*1000)
+        # output_music.export("./test/BC_"+str(i+1)+".wav", format="wav") # 保存音频，前面为保存的路径，后面为保存的格式
+    output_music0 = input_music[beat_time[-1]*1000:beat_time[-1]*1000+500] # 截取音频的前3秒(单位为毫秒)
+    output_music0.export(filename+str(len(beat_time))+".wav", format="wav") # 保存音频，前面为保存的路径，后面为保存的格式
+    result=cut_beat_pitch_detect(filename,len(beat_time))
+    print(result)
+    notes = "".join(fre_to_note(i) for i in result)
+    print(notes)
+    return str(notes)
 # print(result[1])
 # print(judge(1.05,1))9

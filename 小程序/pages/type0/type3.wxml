@@ -1,0 +1,18 @@
+<!--pages/type0/type3.wxml-->
+<!--pages/type0/type0.wxml-->
+
+  <view class="bg"  style="opacity:{{1}}">
+    <image class="bg-image" mode="scaleToFill"></image>
+  </view>
+
+  <view class="bg2"  style="opacity:{{1}}">
+    <image class="bg-image" mode="scaleToFill"></image>
+  </view>
+
+<view class="flex-row" style="display:flex;flex-direction:row;justify-content:center">
+<image style="opacity:0.8" src="https://pic4.zhimg.com/80/v2-3bd06878ccb7157ac7f9f8baf08e54eb_720w.jpg?source=1940ef5c"></image>
+</view>
+<view class="text center">错误类型：右手拨弦后触碰琴弦
+</view>
+<view class="text center">改正方法:拨弦后右手手指离开琴弦
+</view>

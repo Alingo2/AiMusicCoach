@@ -1,0 +1,17 @@
+<!--pages/type0/type0.wxml-->
+
+  <view class="bg"  style="opacity:{{1}}">
+    <image class="bg-image" mode="scaleToFill"></image>
+  </view>
+
+  <view class="bg2"  style="opacity:{{1}}">
+    <image class="bg-image" mode="scaleToFill"></image>
+  </view>
+
+<view class="flex-row" style="display:flex;flex-direction:row;justify-content:center">
+<image style="opacity:0.8" src="https://pic1.zhimg.com/v2-1f442e2b330d053bdd6076d4d8141543_1440w.jpg?source=172ae18b"></image>
+</view>
+<view class="text center">错误类型：右手拨弦幅度过大打品
+</view>
+<view class="text center">改正方法:不要过度使用第一指节拨弦，减小拨弦幅度
+</view>

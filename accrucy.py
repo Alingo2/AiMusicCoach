@@ -12,22 +12,14 @@ import json
 
 def fre_to_note(fre):
     index = round(math.log(fre / 82.4,2**(1/12)))
-<<<<<<< HEAD
     dict = ["E2 ","F2 ","#F2 ","G2 ","#G2 ","A2 ","#A2 ","B2 ","C3 ","#C3 ","D3 ","#D3 ","E3 ","F3 ","#F3 ","G3 ","#G3 ","A3 ","#A3 ","B3 ","C4 ","#C4 ","D4 ","#D4 ","E4 ","F4 ","#F4 ","G4 ","#G4 ","A4 ", "#A4 ", "B4 ", "C5 ", "#C5 ", "D5 ", "#D5 ", "E5 ","F5 ","#F5 ","G5 ","#G5 ","A5 ", "#A5 ", "B5 ", "C6 ", "#C6 ", "D6 ", "#D6 ", "E6 ",
     "F6 ","#F6 ","G6 ","#G6 ","A6 ", "#A6 ", "B6 ", "C7 ", "#C7 ", "D7 ", "#D7 ", "E7 ","F7 ","#F7 ","G7 ","#G7 ","A7 ", "#A7 ", "B7 ", "C8 ","#C8 ","D8 ","#D8 ","E8 ","F8 ","#F8 ","G8 ","#G8 ","A8 ","#A8 ","B8 ","C9"]
-=======
-    dict = ["E2 ","F2 ","#F2 ","G2 ","#G2 ","A2 ","#A2 ","B2 ","C3 ","#C3 ","D3 ","#D3 ","E3 ","F3 ","#F3 ","G3 ","#G3 ","A3 ","#A3 ","B3 ","C4 ","#C4 ","D4 ","#D4 ","E4 ","F4 ","#F4 ","G4 ","#G4 ","A4 ", "#A4 ", "B4 ", "C5 ", "#C5 ", "D5 ", "#D5 ", "E5 "]
->>>>>>> 042930c360124f4d378aec70a288a5f5c60533e5
     return dict[index]
 
 def fre_to_note_piano(fre):
     index = round(math.log(fre / 27.5,2**(1/12)))
     dict = ["A1 ","#A1 ","B1 ","C2 ","#C2 ","D2 ","#D2 ","E2 ","F2 ","#F2 ","G2 ","#G2 ","A2 ","#A2 ","B2 ","C3 ","#C3 ","D3 ","#D3 ","E3 ","F3 ","#F3 ","G3 ","#G3 ","A3 ","#A3 ","B3 ","C4 ","#C4 ","D4 ","#D4 ","E4 ","F4 ","#F4 ","G4 ","#G4 ","A4 ", "#A4 ", "B4 ", "C5 ", "#C5 ", "D5 ", "#D5 ", "E5 ","F5 ","#F5 ","G5 ","#G5 ","A5 ", "#A5 ", "B5 ", "C6 ", "#C6 ", "D6 ", "#D6 ", "E6 ",
-<<<<<<< HEAD
     "F6 ","#F6 ","G6 ","#G6 ","A6 ", "#A6 ", "B6 ", "C7 ", "#C7 ", "D7 ", "#D7 ", "E7 ","F7 ","#F7 ","G7 ","#G7 ","A7 ", "#A7 ", "B7 ", "C8 ","#C8 ","D8 ","#D8 ","E8 ","F8 ","#F8 ","G8 ","#G8 ","A8 ","#A8 ","B8 ","C9 ","#C9 ", "D9 ", "#D9 ", "E9 ","F9 ","#F9 ","G9 ","#G9 ","A9 ", "#A9 ", "B9 ", "C10 "]
-=======
-    "F6 ","#F6 ","G6 ","#G6 ","A6 ", "#A6 ", "B6 ", "C7 ", "#C7 ", "D7 ", "#D7 ", "E7 ","F7 ","#F7 ","G7 ","#G7 ","A7 ", "#A7 ", "B7 ", "C8 ","#C8 ","D8 ","#D8 ","E8 ","F8 ","#F8 ","G8 ","#G8 ","A8 ","#A8 ","B8 ","C9"]
->>>>>>> 042930c360124f4d378aec70a288a5f5c60533e5
     return dict[index],index+21
 
 
@@ -50,10 +42,6 @@ def freq_cul(filepath):
     freqs = nf.fftfreq(sigs.size, 1 / sameple_rate)
     complex_arry = nf.fft(sigs)
     pows = np.abs(complex_arry)
-<<<<<<< HEAD
-
-=======
->>>>>>> 042930c360124f4d378aec70a288a5f5c60533e5
     max_pows_num=pows.argmax()
     fun_freq = abs(freqs[max_pows_num])
     max_pows=int(pows[max_pows_num])# 获取频率域中能量最高的
@@ -73,24 +61,16 @@ def freq_cul(filepath):
         tdo_num=int(Tdomain_freq//distant)
         Tfreq_pow=max(pows[tdo_num-2:tdo_num+2])
         distinguishment = Tfreq_pow/max_pows
-<<<<<<< HEAD
 
 
         if distinguishment>0.01:            #0.1 0.073 0.06 0.05 0.041 最后前2组样本最后值为0.01 
             result = Tdomain_freq
         else:
             result = fun_freq
-=======
-        if distinguishment>0.1:
-            result = Tdomain_freq
-        else:
-            result =fun_freq
->>>>>>> 042930c360124f4d378aec70a288a5f5c60533e5
     else:
         result=(Tdomain_freq+fun_freq)/2
     return result
 
-<<<<<<< HEAD
 # def cut(filepath):
 #     y, sr = librosa.load(filepath,sr=sr0)
 #     onsets_frames = (librosa.onset.onset_detect(y,sr=sr0,units="frames"))*ratio
@@ -104,17 +84,7 @@ def cut(filepath):
     max = np.argmax(sigs)/sameple_rate
     return max
 
-obj_r=open("./examples3.json")
-=======
-def cut(filepath):
-    y, sr = librosa.load(filepath,sr=sr0)
-    onsets_frames = (librosa.onset.onset_detect(y,sr=sr0,units="frames"))*ratio
-    if len(onsets_frames)>0:
-        return True,onsets_frames[0]
-    else:
-        return False,0
-obj_r=open("./examples.json")
->>>>>>> 042930c360124f4d378aec70a288a5f5c60533e5
+obj_r=open("./test/json/examples3.json")
 data=json.load(obj_r)
 guitar_data=[]
 for file_data in data.items():
@@ -133,10 +103,6 @@ for i in range(len(guitar_data)):
     # filepath = "./test/dataset/" + guitar_data[i][0] + ".wav"
     filename = "./test/dataset/out/" + guitar_data[i][0] + "_"
     # input_music = AudioSegment.from_wav(filepath)
-<<<<<<< HEAD
-
-=======
->>>>>>> 042930c360124f4d378aec70a288a5f5c60533e5
     # output_music0 = input_music[:1500]
     # flag,start = cut(filepath)
     # if flag:
@@ -144,12 +110,9 @@ for i in range(len(guitar_data)):
     # else:
     #     output_music0 = input_music[:500]
     #     strange.append(guitar_data[i][0])
-<<<<<<< HEAD
 
     # start = cut(filepath)
     # output_music0 = input_music[start*1000:start*1000+1000]
-=======
->>>>>>> 042930c360124f4d378aec70a288a5f5c60533e5
     # output_music0.export(filename+".wav", format="wav") # 保存音频，前面为保存的路径，后面为保存的格式
     result=freq_cul(filename)
     # print(result)
@@ -162,11 +125,7 @@ for i in range(len(guitar_data)):
         if guitar_data[i][1] == notes[1]:
             right_num += 1
         else:
-<<<<<<< HEAD
             print(filename,"  ",result," ",notes[1],"数据集音高:",guitar_data[i][1])
-=======
-            print(guitar_data[i][1],notes[1])
->>>>>>> 042930c360124f4d378aec70a288a5f5c60533e5
             wrong.append(guitar_data[i][0])
 accrucy = right_num/num
 print("总数:",num)

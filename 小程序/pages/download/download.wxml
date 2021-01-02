@@ -1,0 +1,2 @@
+<!--pages/download/download.wxml-->
+<web-view src="{{src}}"></web-view>

@@ -28,7 +28,7 @@ from timeit import default_timer as timer
 #读取音频文件,将其按照采样率离散化，返回采样率和信号
 #sample_reate:采样率(每秒采样个数),　sigs:每个采样位移值。
 #================1.原始音频信号,时域信息=================================
-sameple_rate,sigs = wf.read('./test/dataset/out/guitar_acoustic_000-021-025_.wav')
+sameple_rate,sigs = wf.read('test/dataset/chord/42_28.wav')
 bolt = sameple_rate
 print('采样率:{}'.format(sameple_rate))
 print('信号点数量:{}'.format(sigs.size))

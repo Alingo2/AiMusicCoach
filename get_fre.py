@@ -45,7 +45,7 @@ def get_peak_data(filepath):
     if nor_max==0:
         return 0
     normalization = db_to/nor_max
-    normalization1 = filter_pows/nor_max1
+    normalization1 = filter_pows/nor_max1           ##nor_max1
     freq_data=normalization1[0:800]
     return freq_data
     # print(normalization)

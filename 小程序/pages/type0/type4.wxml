@@ -1,0 +1,19 @@
+<!--pages/type0/type4.wxml-->
+<!--pages/type0/type3.wxml-->
+<!--pages/type0/type0.wxml-->
+
+  <view class="bg"  style="opacity:{{1}}">
+    <image class="bg-image" mode="scaleToFill"></image>
+  </view>
+
+  <view class="bg2"  style="opacity:{{1}}">
+    <image class="bg-image" mode="scaleToFill"></image>
+  </view>
+
+<view class="flex-row" style="display:flex;flex-direction:row;justify-content:center">
+<image style="opacity:0.8" src="https://s3.ax1x.com/2020/12/10/rFpXFO.jpg"></image>
+</view>
+<view class="text center">错误类型：拨弦前右手在弦上摩擦
+</view>
+<view class="text center">改正方法:拨弦前减少与弦的接触摩擦
+</view>

@@ -1,0 +1,42 @@
+  <view class="bg"  style="opacity:{{1}}">
+    <image class="bg-image" mode="scaleToFill"></image>
+  </view>
+
+  <view class="bg2"  style="opacity:{{1}}">
+    <image class="bg-image" mode="scaleToFill"></image>
+  </view>
+
+<view class="center">
+<image  class="medium" src="/img/word.png"></image>
+</view>
+
+<view class="center">
+<image  class="small" src="/img/stop.png"></image>
+</view>
+
+<!-- <button bindtap="test1">111</button> -->
+
+
+<view class="trans"><button  bindtap="check">校验音频</button></view>
+<view class="trans"><button bindtap="chooseFile">上传识别音频</button></view>
+<view class="trans"><button bindtap="check_chord">上传识别和弦</button></view>
+<view class="trans"><button  bindtap="music">乐曲识别</button></view>
+<view class="trans"><button type="primary" bindtap="upload_song">上传乐曲开头</button></view>
+<view class="trans"><button  type="primary" bindtap="download" data-text="http://192.168.137.1:5000/download/mysong.wav">下载乐曲</button></view>
+
+<!-- <view>
+<text>错误类型:{{type}}</text>
+</view> -->
+
+
+<view class="center">
+<text>单音:{{note}}</text>
+</view>
+
+<view class="center">
+<text>和弦:{{chord}}</text>
+</view>
+
+<view class="center">
+<text>乐曲:{{music}}</text>
+</view>

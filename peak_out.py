@@ -6,7 +6,7 @@ import librosa
 from timeit import default_timer as timer
 import json
 
-obj_r=open("./test/json/examples3.json")
+obj_r=open("./test/json/examples.json")
 data=json.load(obj_r)
 guitar_data=[]
 
@@ -44,7 +44,7 @@ def get_peak_data(filepath):
     if nor_max==0:
         return 0
     normalization = db_to/nor_max
-    normalization1 = filter_pows/nor_max1
+    normalization1 = filter_pows/10000      #原来是nor_max1
     if nor_max==0:
         print(filepath)
     #print(len(normalization),len(filter_pows))
@@ -106,7 +106,7 @@ for info in guitar_data:
 # print(standard_pitch)
 print(len(result2))
 print("舍弃量:",delete_num)
-with open("dataset3_train.txt","w") as f:
+with open("dataset1_train.txt","w") as f:
         f.write(str(result2))
-with open("dataset3_result.txt","w") as f:
+with open("dataset1_result.txt","w") as f:
         f.write(str(standard_pitch))
