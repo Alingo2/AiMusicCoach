@@ -9,11 +9,12 @@ import json
 obj_r=open("./test/json/examples.json")
 data=json.load(obj_r)
 guitar_data=[]
-
+#逐一导入音频文件
 for file_data in data.items():
     if file_data[1]['instrument_family']==3 and file_data[1]["instrument_source_str"]=="acoustic":
         if 40<=file_data[1]['pitch']<=84:
             guitar_data.append([file_data[1]['note_str'],file_data[1]['pitch']])
+#获取音频数据
 def get_peak_data(filepath):
     result=[]
     sameple_rate,sigs = wf.read(filepath)
@@ -87,7 +88,7 @@ result2=[]
 standard_pitch=[]
 name=[]
 delete_num = 0
-
+#逐一生成音频数据供后续机器学习使用
 for info in guitar_data:
     filepath='./test/dataset/out/'+info[0]+'_.wav'
     peakdata=get_peak_data(filepath)

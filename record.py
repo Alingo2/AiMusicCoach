@@ -2,7 +2,7 @@ import pyaudio
 import time
 import threading
 import wave
- 
+ #录音类
 class Recorder():
     def __init__(self, chunk=1024, channels=1, rate=128000):
         self.CHUNK = chunk
@@ -45,7 +45,7 @@ class Recorder():
         wf.writeframes(b''.join(self._frames))
         wf.close()
         print("Saved")
- 
+ #开始录音
 if __name__ == "__main__":
     a = int(input('请输入相应数字开始:'))
     if a == 1:           

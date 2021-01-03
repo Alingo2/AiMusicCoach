@@ -1,3 +1,4 @@
+#逐一导入文件
 import json
 obj_r=open("./examples.json")
 data=json.load(obj_r)

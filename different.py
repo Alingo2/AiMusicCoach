@@ -9,7 +9,7 @@ import numpy.fft as nf
 import scipy.io.wavfile as wf
 import os
 import json
-
+#音频文本转化
 def fre_to_note(fre):
     index = round(math.log(fre / 82.4,2**(1/12)))
     dict = ["E2 ","F2 ","#F2 ","G2 ","#G2 ","A2 ","#A2 ","B2 ","C3 ","#C3 ","D3 ","#D3 ","E3 ","F3 ","#F3 ","G3 ","#G3 ","A3 ","#A3 ","B3 ","C4 ","#C4 ","D4 ","#D4 ","E4 ","F4 ","#F4 ","G4 ","#G4 ","A4 ", "#A4 ", "B4 ", "C5 ", "#C5 ", "D5 ", "#D5 ", "E5 "]
@@ -21,13 +21,14 @@ def fre_to_note_piano(fre):
     "F6 ","#F6 ","G6 ","#G6 ","A6 ", "#A6 ", "B6 ", "C7 ", "#C7 ", "D7 ", "#D7 ", "E7 ","F7 ","#F7 ","G7 ","#G7 ","A7 ", "#A7 ", "B7 ", "C8 ","#C8 ","D8 ","#D8 ","E8 ","F8 ","#F8 ","G8 ","#G8 ","A8 ","#A8 ","B8 ","C9"]
     return dict[index],index+21
 
-
+#判决
 def judge(time_domain_freq,frequency_domain_freq):
     if frequency_domain_freq == 0:
         return False
     if 1.05>=time_domain_freq/frequency_domain_freq>=1/1.05:
         return True
     return False
+#频率计算
 def freq_cul(filepath):
     num0=0
     result = 0
@@ -69,7 +70,7 @@ def freq_cul(filepath):
     else:
         result=(Tdomain_freq+fun_freq)/2
     return [num0,filepath]
-
+#剪切函数
 def cut(filepath):
     y, sr = librosa.load(filepath,sr=sr0)
     onsets_frames = (librosa.onset.onset_detect(y,sr=sr0,units="frames"))*ratio

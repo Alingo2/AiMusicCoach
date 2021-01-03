@@ -8,12 +8,14 @@ data=json.load(obj_r)
 guitar_data={}
 for i in range(40,85):
     guitar_data[str(i)]=[]
+#逐一导入单音文件
 for file_data in data.items():
     if file_data[1]['instrument_family']==3 and file_data[1]["instrument_source_str"]=="acoustic":
         if 40<=file_data[1]['pitch']<=84:
             #print(guitar_data)
             guitar_data[str(file_data[1]['pitch'])].append(file_data[1]['note_str'])
 print(guitar_data)
+#时域叠加生成和弦音频
 def create(filepath1,filepath2,base):
     try:
         sameple_rate1, sigs1 = wf.read(filepath1)

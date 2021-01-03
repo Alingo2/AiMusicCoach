@@ -10,11 +10,13 @@ data=json.load(obj_r)
 # obj1=open("./filename_list.json")
 # data1=json.load(obj1)
 guitar_data=[]
+#逐一导入文件
 for file_data in data.items():
     if file_data[1]['instrument_family']==3 and file_data[1]["instrument_source_str"]=="acoustic":
         if 40<=file_data[1]['pitch']<=84:
             guitar_data.append([file_data[1]['note_str'],file_data[1]['pitch']])
 # guitar_data=data1
+#获得音频数据
 def get_peak_data(filepath):
     result=[]
     sameple_rate,sigs = wf.read(filepath)

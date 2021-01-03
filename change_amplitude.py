@@ -17,6 +17,7 @@ judge_time=[]
 L=len(waveData)
 N=28220
 k=L//N
+#逐一判决
 for i in range(1,k+1):
     sum=0
     I=N*i

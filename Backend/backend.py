@@ -23,12 +23,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 model_single = load_model(UPLOAD_FOLDER + "\CNN.h5")
 model_hexian = load_model(UPLOAD_FOLDER+"\hexianclassification.h5")
 model_fenlei = load_model(UPLOAD_FOLDER+"\mistake_classification.h5")
-
+#音频转换
 def index_to_note_piano(index):
     dict = ["A1 ","#A1 ","B1 ","C2 ","#C2 ","D2 ","#D2 ","E2 ","F2 ","#F2 ","G2 ","#G2 ","A2 ","#A2 ","B2 ","C3 ","#C3 ","D3 ","#D3 ","E3 ","F3 ","#F3 ","G3 ","#G3 ","A3 ","#A3 ","B3 ","C4 ","#C4 ","D4 ","#D4 ","E4 ","F4 ","#F4 ","G4 ","#G4 ","A4 ", "#A4 ", "B4 ", "C5 ", "#C5 ", "D5 ", "#D5 ", "E5 ","F5 ","#F5 ","G5 ","#G5 ","A5 ", "#A5 ", "B5 ", "C6 ", "#C6 ", "D6 ", "#D6 ", "E6 ",
     "F6 ","#F6 ","G6 ","#G6 ","A6 ", "#A6 ", "B6 ", "C7 ", "#C7 ", "D7 ", "#D7 ", "E7 ","F7 ","#F7 ","G7 ","#G7 ","A7 ", "#A7 ", "B7 ", "C8 ","#C8 ","D8 ","#D8 ","E8 ","F8 ","#F8 ","G8 ","#G8 ","A8 ","#A8 ","B8 ","C9 ","#C9 ", "D9 ", "#D9 ", "E9 ","F9 ","#F9 ","G9 ","#G9 ","A9 ", "#A9 ", "B9 ", "C10 "]
     return dict[index]
-
+#文件分析
 def get_peak_data(filepath,num):
     result=[]
     sameple_rate,sigs = wf.read(filepath)
@@ -69,16 +69,16 @@ def get_peak_data(filepath,num):
     freq_data=normalization1[0:num]
     return freq_data
 
-
+#测试函数
 @app.route('/')
 def hello_world():
     return 'Hello World!'
-
+#测试函数
 @app.route('/test1')
 def test1():
     if request.method == "GET":
         return "test1"
-        
+#接收微信小程序的文件
 @app.route('/test2',methods=['POST'])
 def test2():
     if request.method == "POST":
@@ -91,7 +91,7 @@ def test2():
             print(data)
         return '文件不存在'
 
-
+#接收微信小程序上传的文件
 @app.route('/upload',methods=['POST'])
 def upload():
     if request.method == "POST":
@@ -108,7 +108,7 @@ def upload():
             note = index_to_note_piano(index-21)
             print(note)
         return note
-
+#接收文件
 @app.route('/music',methods=['POST'])
 def music():
     if request.method == "POST":
@@ -119,7 +119,7 @@ def music():
             print('上传成功！文件名为：' + filename)
             note = beat_cut.music_to_note( UPLOAD_FOLDER,filename)
         return note
-
+#和弦检测
 @app.route('/chord',methods=['POST'])
 def chord():
     if request.method == "POST":
@@ -137,7 +137,7 @@ def chord():
             print(index)
             print(note1,note2)
         return note1+note2
-
+#文件检测
 @app.route('/check',methods=['POST'])
 def check():
     if request.method == "POST":
@@ -153,8 +153,8 @@ def check():
             print(data)
             index = np.argmax(data[0])
             print(index)
-                return str(index)
-
+            return str(index)
+#下载文件
 @app.route("/download/<path:filename>")
 def download(filename):
     return send_from_directory("D:/MyCode/MyPython/AiMusicCoach/fluidsynth-x64/bin/",filename,as_attachment=True)

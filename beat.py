@@ -7,8 +7,8 @@ import numpy as np
 # zero_crossings = librosa.zero_crossings(x, pad=False)
 # print(sum(zero_crossings))
 
-
 sr0=30000
+#导入文件
 y, sr = librosa.load('./test/dataset/guitar_acoustic_014-097-127.wav',sr=sr0)
 ratio = 512/sr0
 #print(sr)
@@ -16,6 +16,7 @@ ratio = 512/sr0
 onsets_frames = librosa.onset.onset_detect(y,sr=sr0,units="frames")
 #print(onsets_frames/max(onsets_frames))
 print(onsets_frames*ratio)
+#节奏检测
 D = librosa.stft(y)
 librosa.display.specshow(librosa.amplitude_to_db(D))
 plt.vlines(onsets_frames, 0, sr, color='r', linestyle='--')

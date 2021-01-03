@@ -9,15 +9,17 @@ import numpy.fft as nf
 import scipy.io.wavfile as wf
 import os
 
-
+#音频转换
 def fre_to_note(fre):
     index = round(math.log(fre / 82.4,2**(1/12)))
     dict = ["E2 ","F2 ","#F2 ","G2 ","#G2 ","A2 ","#A2 ","B2 ","C3 ","#C3 ","D3 ","#D3 ","E3 ","F3 ","#F3 ","G3 ","#G3 ","A3 ","#A3 ","B3 ","C4 ","#C4 ","D4 ","#D4 ","E4 ","F4 ","#F4 ","G4 ","#G4 ","A4 ", "#A4 ", "B4 ", "C5 ", "#C5 ", "D5 ", "#D5 ", "E5 "]
     return dict[index]
+#判断音频
 def judge(time_domain_freq,frequency_domain_freq):
     if 1.05>=time_domain_freq/frequency_domain_freq>=1/1.05:
         return True
     return False
+#频率计算
 def freq_cul(filepath,i):
     result = 0
     sameple_rate, sigs = wf.read(filepath + str(i) + ".wav")
@@ -61,6 +63,7 @@ def freq_cul(filepath,i):
     else:
         result=(Tdomain_freq+fun_freq)/2
     return result
+#节奏音高检测
 def cut_beat_pitch_detect(filepath,total_num):
     pitch_array=[]
     pitch_array1=[]
@@ -79,7 +82,7 @@ def beat_cul(filepath):
 
 # filepath0 = "./test/happy_birthday.wav"
 # filename="./test/happy_birthday_"
-
+#文件转换
 def music_to_note(path,f):
     filepath0 = path + "\\" + f
     filename = path + "_"

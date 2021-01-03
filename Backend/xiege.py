@@ -6,6 +6,7 @@ import play_music
 import trans_music
 
 # print(new_song)
+#谱曲
 def comp(y,model,model_2):
     print(y)
     x=np.array(y)
@@ -13,7 +14,7 @@ def comp(y,model,model_2):
     temp2=(np.argmax(model_2.predict(x)[0])+1)/4
     #print([temp1,temp2])
     return [temp1,temp2]
-
+#谱曲
 def Compose(filename):
     UPLOAD_FOLDER = 'D:\MyCode\MyPython\AiMusicCoach\Backend'
     model = load_model(UPLOAD_FOLDER+"\composer.h5")
